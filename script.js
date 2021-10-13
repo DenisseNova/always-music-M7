@@ -16,7 +16,10 @@ client.connect(err => {
     /*ingresar()
       .then(() => consultar())
       */
-    consultar()
+    //consultarRut('22.473.284-7')
+    //consultar()
+    //editar()
+    eliminar()
   }
 });
 
@@ -43,6 +46,22 @@ async function consultar(){
     'SELECt * FROM estudiantes '
   );
   console.log('Registros:', res.rows)
+}
+
+async function editar() {
+  const res = await client.query(
+    "UPDATE estudiantes SET curso = 'cuarto' WHERE id = 2 RETURNING *;"
+  );
+    console.log('Registro modificado', res.rows[0]);
+    console.log('Cantidad de registros afectados',res.rowCount);
+    client.end();
+}
+async function eliminar() {
+  const res = await client.query(
+      "DELETE FROM estudiantes WHERE id = 3 RETURNING *;"
+  );
+  console.log('Cantidad de registros afectados',res.rowCount);
+  client.end();
 }
 
 
